@@ -12,95 +12,112 @@ namespace Prog_POE
         private string[] ingredientNames = { };
         private string[] stepDescriptions = { };
         private int[] ingredQuantity = { };
-        private int[] originalQuantities = { }; // Array to store original quantities
+        private int[] originalQuantities = { };
         private int scaleNumber = 0;
         private string[] unitOfMeasurement = { };
         private int repSteps = 0;
         private int ingreNo = 0;
 
-        /// Prompts the user for the information required
+        // Prompts the user for the information required
         public void userInput()
         {
-            Console.WriteLine("What is the name of the recipe?");
-            receipeName = Console.ReadLine();
-            Console.WriteLine();
-
-            Console.WriteLine("How many Ingredients does your recipe have?");
-            int ingreNo = Convert.ToInt32(Console.ReadLine());
-            Console.WriteLine();
-
-            ///Arrays to store the data
-            ingredientNames = new string[ingreNo];
-            ingredQuantity = new int[ingreNo];
-            originalQuantities = new int[ingreNo];
-            unitOfMeasurement = new string[ingreNo];
-
-            Console.WriteLine("Name and Quantity of your ingredients:");
-            nameQuanUnit();
-
-            Console.WriteLine();
-            Console.WriteLine("How many steps are there?");
-            int repSteps = Convert.ToInt32(Console.ReadLine());
-
-            Console.WriteLine("******************************************************************************");
-            Console.WriteLine();
-            Console.WriteLine("Please enter a description for each step: ");
-            steps();
-            Console.WriteLine("******************************************************************************");
-            Console.WriteLine();
-
-            Console.WriteLine("Would you like to view the recipe? (1 - Yes and 0 - No)");
-            int response = Convert.ToInt32(Console.ReadLine());
-
-            if (response == 1)
+            try
             {
-                displayReceipe();
+                Console.WriteLine("What is the name of the recipe?");
+                receipeName = Console.ReadLine();
+                Console.WriteLine();
+
+                Console.WriteLine("How many Ingredients does your recipe have?");
+                ingreNo = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine();
+
+                // Arrays to store the data
+                ingredientNames = new string[ingreNo];
+                ingredQuantity = new int[ingreNo];
+                originalQuantities = new int[ingreNo];
+                unitOfMeasurement = new string[ingreNo];
+
+                Console.WriteLine("Name and Quantity of your ingredients:");
+                nameQuanUnit();
+
+                Console.WriteLine();
+                Console.WriteLine("How many steps are there?");
+                repSteps = Convert.ToInt32(Console.ReadLine());
+
+                Console.WriteLine("******************************************************************************");
+                Console.WriteLine();
+                Console.WriteLine("Please enter a description for each step: ");
+                steps();
+                Console.WriteLine("******************************************************************************");
+                Console.WriteLine();
+
+                Console.WriteLine("Would you like to view the recipe? (1 - Yes and 0 - No)");
+                int response = Convert.ToInt32(Console.ReadLine());
+
+                if (response == 1)
+                {
+                    displayReceipe();
+                }
+                else if (response == 0)
+                {
+                    Console.WriteLine("IDK");
+                }
+
+                Console.WriteLine("Would you like to change the scale of your recipe? (1 - Yes, 0 - No)");
+                int response2 = Convert.ToInt32(Console.ReadLine());
+
+                if (response2 == 1)
+                {
+                    Console.WriteLine("What would you like to scale down to?");
+                    scaleNumber = Convert.ToInt32(Console.ReadLine());
+                    scale();
+                }
+                else if (response2 == 0)
+                {
+                    Console.WriteLine("IDK");
+                }
+
+                Console.WriteLine("Would you like to revert back to the orginal quantities? (1 - Yes, 0 - No)");
+                int response3 = Convert.ToInt32(Console.ReadLine());
+
+                if (response3 == 1)
+                {
+                    resetQuantities();
+                }
+                else if (response3 == 0)
+                {
+                    Console.WriteLine("IDK");
+                }
+
+                Console.WriteLine("Would you like to clear the data for a new receipe?(1 - Yes, 0 - No)");
+                int response4 = Convert.ToInt32(Console.ReadLine());
+
+                if (response2 == 1)
+                {
+                    Console.WriteLine();
+                    clearData();
+                }
+                else if (response4 == 0)
+                {
+                    Console.WriteLine("IDK");
+                }
             }
-            else if (response == 0)
+            catch (FormatException)
             {
-                Console.WriteLine("IDK");
+                Console.WriteLine("Invalid input format. Please enter a valid number.");
             }
-
-            Console.WriteLine("Would you like to change the scale of your recipe? (1 - Yes, 0 - No)");
-            int response2 = Convert.ToInt32(Console.ReadLine());
-
-            if (response2 == 1)
+            catch (OverflowException)
             {
-                Console.WriteLine("What would you like to scale down to?");
-                scaleNumber = Convert.ToInt32(Console.ReadLine());
-                scale();
+                Console.WriteLine("Input is too large to be converted to an integer.");
             }
-            else if (response2 == 0)
+            catch (Exception ex)
             {
-                Console.WriteLine("IDK");
-            }
-
-            Console.WriteLine("Would you like to revert back to the orginal quantities? (1 - Yes, 0 - No)");
-            int response3 = Convert.ToInt32(Console.ReadLine());
-
-            if (response3 == 1)
-            {
-                resetQuantities();
-            }
-            else if (response3 == 0)
-            {
-                Console.WriteLine("IDK");
-            }
-
-            Console.WriteLine("Would you like to clear the data for a new receipe?(1 - Yes, 0 - No)");
-            int response4 = Convert.ToInt32(Console.ReadLine());
-
-            if (response2 == 1)
-            {
-                clearData();
-            }
-            else if (response4 == 0)
-            {
-                Console.WriteLine("IDK");
+                Console.WriteLine($"An error occurred: {ex.Message}");
             }
         }
 
-        ///========================================================================================================
+        //========================================================================================================
+        // Display recipe
         public void displayReceipe()
         {
             Console.WriteLine("******************************************************************************");
@@ -119,7 +136,9 @@ namespace Prog_POE
             }
             Console.WriteLine("******************************************************************************");
         }
-        ///========================================================================================================
+
+        //========================================================================================================
+        // Input steps
         public void steps()
         {
             stepDescriptions = new string[repSteps];
@@ -130,7 +149,9 @@ namespace Prog_POE
                 Console.WriteLine();
             }
         }
-        ///========================================================================================================
+
+        //========================================================================================================
+        // Scale recipe
         public void scale()
         {
             for (int i = 0; i < ingredQuantity.Length; i++)
@@ -141,7 +162,9 @@ namespace Prog_POE
             }
             displayReceipe(); // Display recipe after scaling
         }
-        ///========================================================================================================
+
+        //========================================================================================================
+        // Reset quantities
         public void resetQuantities()
         {
             // Iterate through ingredQuantity and reset each quantity to its original value
@@ -152,7 +175,9 @@ namespace Prog_POE
             Console.WriteLine("Quantities reverted to original values.");
             displayReceipe();
         }
-        ///========================================================================================================
+
+        //========================================================================================================
+        // Clear data for new recipe
         public void clearData()
         {
             receipeName = "";
@@ -165,7 +190,9 @@ namespace Prog_POE
 
             userInput();
         }
-        ///========================================================================================================4
+
+        //========================================================================================================
+        // Input ingredient names, quantities, and units
         public void nameQuanUnit()
         {
             for (int i = 0; i < ingreNo; i++)
@@ -189,6 +216,6 @@ namespace Prog_POE
                 }
             }
         }
-        ///========================================================================================================
+        //========================================================================================================
     }
 }
