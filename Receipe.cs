@@ -11,9 +11,9 @@ namespace Prog_POE
         private string receipeName = "";
         private string[] ingredientNames = { };
         private string[] stepDescriptions = { };
-        private int[] ingredQuantity = { };
-        private int[] originalQuantities = { };
-        private int scaleNumber = 0;
+        private double[] ingredQuantity = { };
+        private double[] originalQuantities = { };
+        private double scaleNumber = 0;
         private string[] unitOfMeasurement = { };
         private int repSteps = 0;
         private int ingreNo = 0;
@@ -33,8 +33,8 @@ namespace Prog_POE
 
                 // Arrays to store the data
                 ingredientNames = new string[ingreNo];
-                ingredQuantity = new int[ingreNo];
-                originalQuantities = new int[ingreNo];
+                ingredQuantity = new double[ingreNo];
+                originalQuantities = new double[ingreNo];
                 unitOfMeasurement = new string[ingreNo];
 
                 Console.WriteLine("Name and Quantity of your ingredients:");
@@ -69,7 +69,9 @@ namespace Prog_POE
                 if (response2 == 1)
                 {
                     Console.WriteLine("What would you like to scale down to?");
-                    scaleNumber = Convert.ToInt32(Console.ReadLine());
+                    string scaleInput = Console.ReadLine();
+                    Console.WriteLine($"Scale input received: {scaleInput}");
+                    scaleNumber = double.Parse(scaleInput, System.Globalization.CultureInfo.InvariantCulture);
                     scale();
                 }
                 else if (response2 == 0)
@@ -156,7 +158,7 @@ namespace Prog_POE
         {
             for (int i = 0; i < ingredQuantity.Length; i++)
             {
-                int newQuantity = originalQuantities[i] / scaleNumber;
+                double newQuantity = originalQuantities[i] * scaleNumber;
                 Console.WriteLine("Old: " + ingredQuantity[i] + " New: " + newQuantity);
                 ingredQuantity[i] = newQuantity;
             }
@@ -183,8 +185,8 @@ namespace Prog_POE
             receipeName = "";
             ingredientNames = new string[] { };
             stepDescriptions = new string[] { };
-            ingredQuantity = new int[] { };
-            originalQuantities = new int[] { };
+            ingredQuantity = new double[] { };
+            originalQuantities = new double[] { };
             scaleNumber = 0;
             unitOfMeasurement = new string[] { };
 
