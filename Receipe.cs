@@ -58,10 +58,6 @@ namespace Prog_POE
                 {
                     displayReceipe();
                 }
-                else if (response == 0)
-                {
-                    Console.WriteLine("IDK");
-                }
 
                 Console.WriteLine("Would you like to change the scale of your recipe? (1 - Yes, 0 - No)");
                 int response2 = Convert.ToInt32(Console.ReadLine());
@@ -70,25 +66,16 @@ namespace Prog_POE
                 {
                     Console.WriteLine("What would you like to scale down to?");
                     string scaleInput = Console.ReadLine();
-                    Console.WriteLine($"Scale input received: {scaleInput}");
                     scaleNumber = double.Parse(scaleInput, System.Globalization.CultureInfo.InvariantCulture);
                     scale();
                 }
-                else if (response2 == 0)
-                {
-                    Console.WriteLine("IDK");
-                }
-
+                
                 Console.WriteLine("Would you like to revert back to the orginal quantities? (1 - Yes, 0 - No)");
                 int response3 = Convert.ToInt32(Console.ReadLine());
 
                 if (response3 == 1)
                 {
                     resetQuantities();
-                }
-                else if (response3 == 0)
-                {
-                    Console.WriteLine("IDK");
                 }
 
                 Console.WriteLine("Would you like to clear the data for a new receipe?(1 - Yes, 0 - No)");
@@ -97,12 +84,9 @@ namespace Prog_POE
                 if (response2 == 1)
                 {
                     Console.WriteLine();
+                    Console.WriteLine("Data cleared");
                     clearData();
-                }
-                else if (response4 == 0)
-                {
-                    Console.WriteLine("IDK");
-                }
+                }              
             }
             catch (FormatException)
             {
@@ -212,10 +196,7 @@ namespace Prog_POE
                     Console.WriteLine("What is the unit of measurement?");
                     unitOfMeasurement[i] = Console.ReadLine();
                 }
-                else if (resp == 0)
-                {
-                    Console.WriteLine();
-                }
+                
             }
         }
         //========================================================================================================
